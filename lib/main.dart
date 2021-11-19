@@ -47,18 +47,14 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    _refreshJournals(); // Loading the diary when the app starts
+    _refreshJournals();
   }
 
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
 
-  // This function will be triggered when the floating button is pressed
-  // It will also be triggered when you want to update an item
   void _showForm(int? id) async {
     if (id != null) {
-      // id == null -> create new item
-      // id != null -> update an existing item
       final existingJournal =
           _journals.firstWhere((element) => element['id'] == id);
       _titleController.text = existingJournal['title'];
