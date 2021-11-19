@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'ToDo',
+        title: 'Jotter',
         theme: ThemeData(
           primaryColor: Colors.deepPurple[500],
           primarySwatch: Colors.deepPurple,
@@ -141,7 +141,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('ToDo'),
+        title: const Text('Jotter'),
         centerTitle: true,
       ),
       body: _isLoading
