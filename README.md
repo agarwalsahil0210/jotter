@@ -1,6 +1,9 @@
 # Jotter
 
-A new Flutter project.
+A flutter app that will help you to jot down your tasks instantly and maintain a record for its status.
+
+## Tech used:
+SQFlite for databse and dart for UI.
 
 ## Getting Started
 
