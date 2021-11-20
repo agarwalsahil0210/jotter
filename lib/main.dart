@@ -54,6 +54,7 @@ class _HomePageState extends State<HomePage> {
   final TextEditingController _descriptionController = TextEditingController();
 
   void _showForm(int? id) async {
+    bool _valid = false;
     if (id != null) {
       final existingJournal =
           _journals.firstWhere((element) => element['id'] == id);
@@ -62,6 +63,10 @@ class _HomePageState extends State<HomePage> {
     }
 
     showModalBottomSheet(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15.0),
+        ),
+        isScrollControlled: true,
         context: context,
         elevation: 5,
         builder: (_) => Container(
@@ -74,8 +79,12 @@ class _HomePageState extends State<HomePage> {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     TextField(
+                      autofocus: true,
                       controller: _titleController,
-                      decoration: const InputDecoration(hintText: 'Title'),
+                      decoration: InputDecoration(
+                        hintText: 'Title',
+                        errorText: _valid ? "Value Can\'t Be Empty" : null,
+                      ),
                     ),
                     const SizedBox(
                       height: 10,
@@ -91,20 +100,25 @@ class _HomePageState extends State<HomePage> {
                     ElevatedButton(
                       onPressed: () async {
                         // Save new journal
-                        if (id == null) {
+                        if (id == null && _titleController.text.isNotEmpty) {
                           await _addItem();
                         }
 
                         if (id != null) {
                           await _updateItem(id);
                         }
-
-                        // Clear the text fields
-                        _titleController.text = '';
-                        _descriptionController.text = '';
+                        setState(() {
+                          _titleController.text.isEmpty
+                              ? _valid = true
+                              : _valid = false;
+                        });
 
                         // Close the bottom sheet
-                        Navigator.of(context).pop();
+                        if (_titleController.text.isNotEmpty)
+                          Navigator.of(context).pop();
+
+                        _titleController.text = '';
+                        _descriptionController.text = '';
                       },
                       child: Text(id == null ? 'Create New' : 'Update'),
                     )
@@ -175,6 +189,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
       floatingActionButton: FloatingActionButton(
+        hoverColor: Colors.deepPurple[200],
         child: const Icon(Icons.add),
         onPressed: () => _showForm(null),
       ),
